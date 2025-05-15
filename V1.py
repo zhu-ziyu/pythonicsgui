@@ -223,16 +223,14 @@ agree_cb = tk.Checkbutton(left_frame, text="I agree to the User Guidelines", fon
                           activebackground="black", activeforeground="white")
 agree_cb.grid(row=4, column=1, padx=20, pady=5, sticky="w")
 
-# Slider for background brightness
 slider = tk.Scale(left_frame, from_=0, to=100, orient="horizontal", command=change_theme, length=300,
                   fg="white", bg="black", highlightbackground="black")
 slider.grid(row=5, column=0, columnspan=2, padx=20, pady=10)
 
-# Error message label
+
 error_label = tk.Label(left_frame, textvariable=error_var, font=error_font, fg="red", bg="black")
 error_label.grid(row=6, column=0, columnspan=2, padx=20, pady=(5, 20), sticky="w")
 
-# Right frame widgets (labels and entries for user inputs)
 user_label = tk.Label(right_frame, text="Username:", font=label_font, fg="white", bg="black")
 user_entry = tk.Entry(right_frame, textvariable=username_var, font=entry_font, width=30)
 pass_label = tk.Label(right_frame, text="Password:", font=label_font, fg="white", bg="black")
@@ -244,7 +242,7 @@ email_entry = tk.Entry(right_frame, textvariable=email_var, font=entry_font, wid
 code_label = tk.Label(right_frame, text="Verification:", font=label_font, fg="white", bg="black")
 code_entry = tk.Entry(right_frame, textvariable=verification_var, font=entry_font, width=30)
 
-# Grid placement for labels and entry fields
+
 user_label.grid(row=0, column=0, padx=10, pady=5, sticky="e")
 user_entry.grid(row=0, column=1, padx=10, pady=5, sticky="w")
 pass_label.grid(row=1, column=0, padx=10, pady=5, sticky="e")
@@ -256,18 +254,16 @@ email_entry.grid(row=3, column=1, padx=10, pady=5, sticky="w")
 code_label.grid(row=4, column=0, padx=10, pady=5, sticky="e")
 code_entry.grid(row=4, column=1, padx=10, pady=5, sticky="w")
 
-# Buttons at the bottom of right frame
+
 forgot_btn = tk.Button(right_frame, text="forget the password", font=button_font, command=on_forgot_password)
 forgot_btn.grid(row=5, column=0, padx=10, pady=(10, 20), sticky="w")
 done_button = tk.Button(right_frame, text="DONE", font=button_font, state="disabled", command=on_done)
 done_button.grid(row=5, column=1, padx=10, pady=(10, 20), sticky="e", ipadx=10)
 
-# Trace variable changes for dynamic validation feedback
 username_var.trace_add("write", check_all_conditions)
 password_var.trace_add("write", check_all_conditions)
 verify_var.trace_add("write", check_all_conditions)
 email_var.trace_add("write", check_all_conditions)
 verification_var.trace_add("write", check_all_conditions)
 
-# Start the Tkinter event loop
 root.mainloop()
