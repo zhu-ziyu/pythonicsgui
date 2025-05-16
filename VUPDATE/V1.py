@@ -187,7 +187,7 @@ title_label.grid(row=0, column=0, columnspan=2, padx=20, pady=(20, 10), sticky="
 
 # Logo image (displayed above the "Generate code" button)
 try:
-    logo_img = tk.PhotoImage(file="logo_white.png")
+    logo_img = tk.PhotoImage(file="../logo_white.png")
     logo_label = tk.Label(left_frame, image=logo_img, bg="black")
     logo_label.grid(row=1, column=0, columnspan=2, pady=10)
 except Exception as e:

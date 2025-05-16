@@ -27,10 +27,6 @@ option_font   = (FONT_NAME, 14)
 listbox_font  = (FONT_NAME, 14)
 
 
-preset_usernames = [
-    ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
-    for _ in range(10)
-]
 
 max_repeats_var   = IntVar(value=4)
 min_length_var    = IntVar(value=0)
@@ -186,17 +182,6 @@ listbox = Listbox(right_frame,
 )
 listbox.grid(row=1, column=0, columnspan=2, padx=10, pady=5, sticky="w")
 
-# 手动插入示例用户名
-listbox.insert(END, preset_usernames[0])
-listbox.insert(END, preset_usernames[1])
-listbox.insert(END, preset_usernames[2])
-listbox.insert(END, preset_usernames[3])
-listbox.insert(END, preset_usernames[4])
-listbox.insert(END, preset_usernames[5])
-listbox.insert(END, preset_usernames[6])
-listbox.insert(END, preset_usernames[7])
-listbox.insert(END, preset_usernames[8])
-listbox.insert(END, preset_usernames[9])
 
 username_label = Label(right_frame,
     text="Username:",
