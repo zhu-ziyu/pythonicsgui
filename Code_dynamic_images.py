@@ -57,6 +57,21 @@ def on_username_select(event):
 def on_password_change(*args):
     pass
 
+
+def update_image(*args):
+    lvl = complexity_var.get()
+    path = {
+        "Low":    "imgg.png",
+        "Medium": "imgo.png",
+        "High":   "imgr.png"
+    }.get(lvl, "logo.png")
+    photo = load_and_resize(path)
+    logo_label.config(image=photo)
+    logo_label.image = photo
+
+# 绑定到 complexity_var
+complexity_var.trace_add("write", update_image)
+
 # 左右两部分
 left_frame  = Frame(root)
 right_frame = Frame(root)
@@ -72,10 +87,14 @@ title_label = Label(left_frame,
 )
 title_label.grid(row=0, column=0, columnspan=2, padx=20, pady=(20,10), sticky="w")
 
-logo_label = Label(left_frame,
-    text="[Logo]",
-    font=label_font
-)
+# --- 左侧：替换 logo_label 为图片 ---
+def load_and_resize(path):
+    img = Image.open(path).resize((100, 100), Image.ANTIALIAS)
+    return ImageTk.PhotoImage(img)
+
+logo_photo = load_and_resize("logo_white.png")
+logo_label = Label(left_frame, image=logo_photo)
+logo_label.image = logo_photo
 logo_label.grid(row=1, column=0, columnspan=2, pady=10)
 
 generate_btn = Button(left_frame,
@@ -281,6 +300,3 @@ listbox.bind("<<ListboxSelect>>", on_username_select)
 password_var.trace_add("write", on_password_change)
 
 root.mainloop()
-
-
-#这是现在的代码，我发现现在的代码，我的图片太大了，我需要缩小，大概100px*100px吧，然后居中，然后老师刚刚要求，图片需要随着用户的选择发生改变，那么我希望图片根据用户选择的难易程度变为，绿色，橙色，红色（id分别为imgg.png,imgo.png.imgr.png，(开始的时候用户还没有选择难度的时候图片默认是logo.png)帮我直接完成这个功能和相关函数，给我需要添加/修改的代码
