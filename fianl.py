@@ -3,7 +3,6 @@ import tkinter.font as tkFont
 import random
 import string
 
-# ================= 窗口与字体 =================
 root = Tk()
 root.title("Password Validation GUI – SAM")
 root.resizable(False, False)
@@ -25,7 +24,7 @@ radio_font    = (FONT_NAME, 14)
 option_font   = (FONT_NAME, 14)
 listbox_font  = (FONT_NAME, 14)
 
-# ================= 预设 / 变量 =================
+
 preset_usernames = [
     ''.join(random.choices(string.ascii_lowercase + string.digits, k=6))
     for _ in range(10)
@@ -46,7 +45,7 @@ error_var         = StringVar(value="")
 
 code_actual = ""   # 当前验证码
 
-# ================= 工具函数 =================
+
 def password_validation(pwd: str):
     """返回 (has_digit, has_letter, has_symbol)"""
     has_digit  = any(c.isdigit() for c in pwd)
@@ -56,7 +55,6 @@ def password_validation(pwd: str):
 
 
 def repeats_ok(pwd: str, limit: int):
-    """检查是否存在超过 limit 的连续相同字符"""
     cnt = 1
     prev = ""
     for c in pwd:
@@ -71,7 +69,7 @@ def repeats_ok(pwd: str, limit: int):
 
 
 def strength_error_message():
-    """返回密码不符合时的错误文字；若符合返回空串"""
+
     pwd = password_var.get()
     has_digit, has_letter, has_symbol = password_validation(pwd)
     comp = complexity_var.get()
@@ -95,7 +93,7 @@ def strength_error_message():
 
 
 def refresh_done_state():
-    """综合判断 DONE 是否可点"""
+
     pwd_ok   = strength_error_message() == ""
     same_pwd = password_var.get() == verify_var.get() and password_var.get() != ""
     human    = is_human_var.get() == 1
@@ -104,7 +102,6 @@ def refresh_done_state():
     all_ok   = pwd_ok and same_pwd and human and agree and code_ok
     done_button.config(state=NORMAL if all_ok else DISABLED)
 
-# ================= 事件函数 =================
 def on_generate_code():
     global code_actual
     code_actual = ''.join(random.choices(string.ascii_uppercase, k=3))
@@ -132,7 +129,6 @@ def on_password_change(*args):
     min_length_var.set(len(password_var.get()))
     refresh_done_state()
 
-# —— 难度切换时的图片更新 ——
 image_map = {
     "Low":    "imgg.png",
     "Medium": "imgo.png",
@@ -154,11 +150,10 @@ def on_complexity_change(*args):
 
     refresh_done_state()
 
-# —— 其他变量实时刷新 DONE 状态 ——
+
 def on_misc_change(*args):
     refresh_done_state()
 
-# ====================== 布局 ======================
 left_frame  = Frame(root)
 right_frame = Frame(root)
 left_frame.grid (row=0, column=0, sticky="nw")
@@ -246,7 +241,7 @@ error_label = Label(left_frame, textvariable=error_var, font=label_font, fg="red
 error_label.grid(row=9, column=0, columnspan=3, padx=20, pady=(5,20), sticky="w")
 
 # ================= 右侧 =================
-Label(right_frame, text="Choose preset username:", font=label_font)\
+Label(right_frame, text="Choose random username:", font=label_font)\
     .grid(row=0, column=0, columnspan=2, padx=10, pady=(20,5), sticky="w")
 
 listbox = Listbox(right_frame, height=6, font=listbox_font, exportselection=False)
@@ -254,7 +249,7 @@ listbox.grid(row=1, column=0, columnspan=2, padx=10, pady=5, sticky="w")
 for name in preset_usernames:
     listbox.insert(END, name)
 
-# 输入框们
+# 输入框
 Label(right_frame, text="Username:", font=label_font)\
     .grid(row=2, column=0, padx=10, pady=5, sticky="e")
 Entry(right_frame, textvariable=username_var, font=entry_font, width=30)\
@@ -288,7 +283,6 @@ done_button = Button(right_frame, text="DONE",
                      font=button_font, state=DISABLED, command=on_submit)
 done_button.grid(row=7, column=1, padx=10, pady=(10,20), sticky="e", ipadx=10)
 
-# ============== 绑定 ============
 listbox.bind("<<ListboxSelect>>", on_username_select)
 password_var.trace_add("write", on_password_change)
 verify_var.trace_add("write", on_misc_change)
