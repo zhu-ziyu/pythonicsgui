@@ -56,7 +56,7 @@ def full_error_message():
     if not email:
         return "Email cannot be empty"
     if "@" not in email or "." not in email:
-        return "Email format is incorrect"
+        return "Email format is incorrect（use gmail)"
     pwd = password_var.get()
     if not pwd:
         return "Password cannot be empty"
@@ -64,16 +64,13 @@ def full_error_message():
         return "Please verify password"
     if pwd != verify_var.get():
         return "Passwords do not match"
-    # 密码强度 & 重复
     msg = strength_error_message()
     if msg:
         return msg
-    # 复选框
     if is_human_var.get() != 1:
         return "Please confirm you are human"
     if agree_var.get() != 1:
         return "You must agree to the User Guidelines"
-    # 验证码
     if not code_actual:
         return "Please generate a verification code"
     code_input = verification_var.get().strip()
@@ -85,7 +82,6 @@ def full_error_message():
 
 
 def password_validation(pwd: str):
-    """返回 (has_digit, has_letter, has_symbol)"""
     has_digit  = any(c.isdigit() for c in pwd)
     has_letter = any(c.isalpha() for c in pwd)
     has_symbol = any(c in string.punctuation for c in pwd)
@@ -157,7 +153,7 @@ def on_validate_pwd():
 
 
 def on_submit():
-    messagebox.showinfo("注册成功", "你已经成功注册")
+    messagebox.showinfo("you are all good", "you are all good")
 
 def on_username_select(event):
     sel = listbox.curselection()
@@ -189,6 +185,7 @@ def on_complexity_change():
         pass  # 图片缺失时静默
 
     refresh_done_state()
+
 #已经失效
 #def on_max_repeats_change():
 #    pwd = password_var.get()
@@ -238,7 +235,7 @@ right_frame = Frame(root)
 left_frame.grid (row=0, column=0, sticky="nw")
 right_frame.grid(row=0, column=1, sticky="ne")
 
-# --- 左：标题 & Logo ---
+#左：标题 & Logo
 title_label = Label(left_frame, text="Password validation\n--SAM", font=title_font)
 title_label.grid(row=0, column=0, columnspan=2, padx=20, pady=(20,10))
 
@@ -338,7 +335,7 @@ opt.grid(row=7, column=1, columnspan=2, sticky="w")
 error_label = Label(left_frame, textvariable=error_var, font=label_font, fg="red")
 error_label.grid(row=9, column=0, columnspan=3, padx=20, pady=(5,20), sticky="w")
 
-# ================= 右侧 =================
+#右侧
 Label(right_frame, text="Choose random username:", font=label_font)\
     .grid(row=0, column=0, columnspan=2, padx=10, pady=(20,5), sticky="w")
 
